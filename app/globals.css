@@ -1,0 +1,80 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-bg: #0f1f1a;
+  --color-surface: #1a3a2f;
+  --color-accent: #d4e94c;
+  --color-accent-dark: #8fb339;
+  --color-mid-1: #2d5a47;
+  --color-mid-2: #5a8a7a;
+  --color-mid-3: #3d6b5a;
+  --color-mid-4: #a3c940;
+  --color-mid-5: #7da32e;
+}
+
+:root {
+  --page-bg: #FFFFFF;
+  --surface-bg: #E8EBEF;
+  --text-primary: #013F40;
+  --text-secondary: rgba(1, 63, 64, 0.7);
+  --text-muted: rgba(1, 63, 64, 0.5);
+  --text-faint: rgba(1, 63, 64, 0.3);
+  --border-subtle: rgba(1, 63, 64, 0.1);
+  --border-hover: rgba(125, 209, 95, 0.5);
+  --glass-bg: rgba(255, 255, 255, 0.6);
+  --glass-hover: rgba(255, 255, 255, 0.8);
+  --dot-color: rgba(1, 63, 64, 0.05);
+  --glow-color: rgba(125, 209, 95, 0.2);
+  --glow-strong: rgba(125, 209, 95, 0.4);
+
+  /* Brand Colors Helper Variables */
+  --brand-primary: #013F40;
+  --brand-accent: #7DD15F;
+  --brand-surface: #E8EBEF;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--page-bg);
+  color: var(--text-primary);
+  font-family: system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Dot grid overlay - subtler for light theme */
+.dot-grid {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: radial-gradient(var(--dot-color) 1px, transparent 1px);
+  background-size: 32px 32px;
+  opacity: 1;
+}
+
+/* Selection color */
+::selection {
+  background-color: rgba(125, 209, 95, 0.3);
+  color: #013F40;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FFFFFF;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(1, 63, 64, 0.1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(1, 63, 64, 0.2);
+}
