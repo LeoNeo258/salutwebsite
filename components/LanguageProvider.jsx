@@ -6,7 +6,7 @@ import { translations } from "@/lib/translations";
 const LanguageContext = createContext();
 
 export function LanguageProvider({ children }) {
-    const [language, setLanguage] = useState("EN");
+    const [language, setLanguage] = useState("ES");
 
     // Optional: could persist to localStorage here
     useEffect(() => {
