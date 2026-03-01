@@ -7,7 +7,7 @@ export function GlassCard({ children, className, hover = true, ...props }) {
     return (
         <motion.div
             className={cn(
-                "rounded-2xl border border-[var(--border-subtle)] bg-[var(--glass-bg)] backdrop-blur-xl p-8 transition-all duration-500",
+                "rounded-2xl border border-[var(--border-subtle)] bg-[var(--glass-bg)] p-8 transition-all duration-500",
                 className
             )}
             whileHover={

@@ -5,28 +5,31 @@ import { Check } from "lucide-react";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { AtomAnimation } from "@/components/ui/AtomAnimation";
+import { useLanguage } from "@/components/LanguageProvider";
 
-const capabilities = [
+const capabilitiesData = [
     {
-        title: "Predicts Demand",
-        description: "Knows what will sell before you do.",
+        titleKey: "pythia.c1.title",
+        descKey: "pythia.c1.desc",
     },
     {
-        title: "Prevents Stockouts",
-        description: "Alerts you to reorder before shelves are empty.",
+        titleKey: "pythia.c2.title",
+        descKey: "pythia.c2.desc",
     },
     {
-        title: "Reduces Waste",
-        description: "Orders the right amount to minimize expired goods.",
+        titleKey: "pythia.c3.title",
+        descKey: "pythia.c3.desc",
     },
 ];
 
-const stats = [
-    { label: "Prediction Accuracy", value: "98.5%", position: "top-[15%] left-0" },
-    { label: "Waste Reduction", value: "-35%", position: "bottom-[15%] right-0" },
+const statsData = [
+    { labelKey: "pythia.s1.label", valueKey: "pythia.s1.value", position: "top-[15%] left-0" },
+    { labelKey: "pythia.s2.label", valueKey: "pythia.s2.value", position: "bottom-[15%] right-0" },
 ];
 
 export function Pythia() {
+    const { t } = useLanguage();
+
     return (
         <AnimatedSection id="pythia" className="py-20 px-6 relative z-10">
             <div className="mx-auto max-w-7xl">
@@ -62,9 +65,9 @@ export function Pythia() {
                         </motion.p>
 
                         <div className="mt-8 space-y-4">
-                            {capabilities.map((item, i) => (
+                            {capabilitiesData.map((item, i) => (
                                 <motion.div
-                                    key={item.title}
+                                    key={item.titleKey}
                                     className="flex items-start gap-4"
                                     initial={{ opacity: 0, x: -20 }}
                                     whileInView={{ opacity: 1, x: 0 }}
@@ -75,9 +78,9 @@ export function Pythia() {
                                         <Check className="w-4 h-4 text-[#7DD15F]" />
                                     </div>
                                     <div>
-                                        <h4 className="font-semibold text-[#013F40]">{item.title}</h4>
+                                        <h4 className="font-semibold text-[#013F40]">{t(item.titleKey)}</h4>
                                         <p className="text-[#013F40]/60 text-sm">
-                                            {item.description}
+                                            {t(item.descKey)}
                                         </p>
                                     </div>
                                 </motion.div>
@@ -93,15 +96,18 @@ export function Pythia() {
                         viewport={{ once: true }}
                         transition={{ delay: 0.3 }}
                     >
-                        {/* Glow backdrop */}
-                        <div className="absolute w-64 h-64 rounded-full bg-[#7DD15F]/20 blur-3xl" />
+                        {/* Glow backdrop (Optimized) */}
+                        <div
+                            className="absolute w-64 h-64 rounded-full opacity-60"
+                            style={{ background: "radial-gradient(circle, rgba(125,209,95,0.4) 0%, rgba(125,209,95,0) 70%)" }}
+                        />
 
                         <AtomAnimation />
 
                         {/* Floating stat cards */}
-                        {stats.map((stat, i) => (
+                        {statsData.map((stat, i) => (
                             <motion.div
-                                key={stat.label}
+                                key={stat.labelKey}
                                 className={`absolute ${stat.position}`}
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
@@ -109,11 +115,11 @@ export function Pythia() {
                                 transition={{ delay: 0.5 + i * 0.2 }}
                             >
                                 <GlassCard className="p-4" hover={false}>
-                                    <span className="text-xs text-[#013F40]/60 block">
-                                        {stat.label}
+                                    <span className="text-xs text-[#013F40]/60 block whitespace-nowrap">
+                                        {t(stat.labelKey)}
                                     </span>
                                     <strong className="text-2xl font-bold text-[#7DD15F]">
-                                        {stat.value}
+                                        {t(stat.valueKey)}
                                     </strong>
                                 </GlassCard>
                             </motion.div>

@@ -1,17 +1,18 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Languages, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/components/LanguageProvider";
 
 const navLinks = [
-    { href: "#hero", label: "Home" },
-    { href: "#problem", label: "About" },
-    { href: "#features", label: "Features" },
-    { href: "#pythia", label: "Pythia AI" },
-    { href: "#pricing", label: "Price" },
-    { href: "#faq", label: "FAQ" },
+    { href: "#hero", keyStr: "home", label: "Home" },
+    { href: "#problem", keyStr: "about", label: "About" },
+    { href: "#features", keyStr: "features", label: "Features" },
+    { href: "#pythia", keyStr: "pythia", label: "Pythia AI" },
+    { href: "#pricing", keyStr: "price", label: "Price" },
+    { href: "#faq", keyStr: "faq", label: "FAQ" },
 ];
 
 // Mapping of section IDs to the nav link href that should be active
@@ -25,8 +26,27 @@ export function Header() {
     const [mobileOpen, setMobileOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const [activeSection, setActiveSection] = useState("");
-    const [currentLang, setCurrentLang] = useState("EN");
+    const { language, setLanguage, t } = useLanguage();
     const [langMenuOpen, setLangMenuOpen] = useState(false);
+
+    // Dropdown ref for outside click tracking
+    const langMenuRef = useRef(null);
+
+    // Handle outside click for Language Menu
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (langMenuRef.current && !langMenuRef.current.contains(event.target)) {
+                setLangMenuOpen(false);
+            }
+        }
+
+        // Bind the event listener
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            // Unbind the event listener on clean up
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [langMenuRef]);
 
     // Handle Scroll for Shrink Effect & Top Position
     useEffect(() => {
@@ -95,13 +115,10 @@ export function Header() {
             className="fixed top-0 left-0 right-0 z-50 flex justify-center items-start pt-6 px-6 pointer-events-none"
         >
             <motion.nav
-                layout
-                initial={{ width: "100%", maxWidth: "80rem", borderRadius: "1.5rem" }}
+                initial={{ y: -20, opacity: 0 }}
                 animate={{
-                    width: scrolled ? "auto" : "100%",
-                    maxWidth: scrolled ? "fit-content" : "80rem",
                     y: scrolled ? 10 : 0,
-                    borderRadius: "9999px",
+                    opacity: 1
                 }}
                 transition={{
                     type: "spring",
@@ -110,10 +127,10 @@ export function Header() {
                     mass: 0.5
                 }}
                 className={cn(
-                    "relative pointer-events-auto flex items-center justify-between px-2 py-2 transition-all duration-300",
+                    "relative pointer-events-auto flex items-center justify-between px-2 py-2 transition-all duration-300 mx-auto",
                     scrolled
-                        ? "bg-white/80 backdrop-blur-xl shadow-lg border border-transparent"
-                        : "bg-transparent border border-transparent"
+                        ? "bg-white/95 shadow-lg border border-transparent w-fit rounded-full"
+                        : "bg-transparent border border-transparent w-full max-w-[80rem] rounded-[1.5rem]"
                 )}
             >
                 {/* Logo */}
@@ -129,6 +146,9 @@ export function Header() {
                 <div className="hidden md:flex items-center bg-[#F5F7F9]/50 rounded-full p-1.5 border border-[#013F40]/5 mx-4">
                     {navLinks.map((link) => {
                         const isActive = activeSection === link.href;
+                        // Dynamically translate the label using the mapped keys
+                        const translatedLabel = t(`nav.${link.keyStr}`) || link.label;
+
                         return (
                             <a
                                 key={link.label}
@@ -145,7 +165,7 @@ export function Header() {
                                         transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                                     />
                                 )}
-                                {link.label}
+                                {translatedLabel}
                             </a>
                         );
                     })}
@@ -154,7 +174,7 @@ export function Header() {
                 {/* CTA & Mobile Toggle */}
                 <div className="flex items-center gap-2 pr-2 overflow-visible">
                     {/* Language Switcher */}
-                    <div className="relative group">
+                    <div className="relative group" ref={langMenuRef}>
                         <button
                             onClick={() => setLangMenuOpen(!langMenuOpen)}
                             className={cn(
@@ -165,7 +185,7 @@ export function Header() {
                             )}
                         >
                             <Languages size={16} className="text-[#7DD15F]" />
-                            <span className="text-sm font-semibold uppercase">{currentLang}</span>
+                            <span className="text-sm font-semibold uppercase">{language}</span>
                             <ChevronDown
                                 size={14}
                                 className={cn("transition-transform duration-300", langMenuOpen && "rotate-180")}
@@ -183,25 +203,27 @@ export function Header() {
                                     <div className="flex flex-col gap-1">
                                         <button
                                             onClick={() => {
-                                                setCurrentLang("EN");
+                                                setLanguage("EN");
                                                 setLangMenuOpen(false);
                                             }}
                                             className={cn(
                                                 "w-full text-left px-3 py-2 rounded-xl text-sm transition-colors",
-                                                currentLang === "EN" ? "bg-[#7DD15F]/10 text-[#013F40] font-bold" : "hover:bg-gray-50 text-[#013F40]/70"
+                                                language === "EN" ? "bg-[#7DD15F]/10 text-[#013F40] font-bold" : "hover:bg-gray-50 text-[#013F40]/70"
                                             )}
                                         >
                                             🇬🇧 English
                                         </button>
                                         <button
-                                            disabled // Disable Spanish for now as requested
                                             onClick={() => {
-                                                // setCurrentLang("ES");
+                                                setLanguage("ES");
                                                 setLangMenuOpen(false);
                                             }}
-                                            className="w-full text-left px-3 py-2 rounded-xl text-sm text-[#013F40]/30 cursor-not-allowed"
+                                            className={cn(
+                                                "w-full text-left px-3 py-2 rounded-xl text-sm transition-colors",
+                                                language === "ES" ? "bg-[#7DD15F]/10 text-[#013F40] font-bold" : "hover:bg-gray-50 text-[#013F40]/70"
+                                            )}
                                         >
-                                            🇪🇸 Spanish <span className="text-[10px] bg-gray-100 px-1 rounded ml-1 italic font-normal">soon</span>
+                                            🇪🇸 Español
                                         </button>
                                     </div>
                                 </motion.div>
@@ -216,7 +238,7 @@ export function Header() {
                             scrolled ? "px-4 py-2" : "px-6 py-2.5"
                         )}
                     >
-                        Get Started
+                        {t("nav.getStarted") || "Get Started"}
                     </a>
                     <button
                         className="md:hidden p-2 text-[#013F40] rounded-full hover:bg-black/5"
@@ -252,11 +274,11 @@ export function Header() {
                                         href={link.href}
                                         onClick={() => setMobileOpen(false)}
                                         className={cn(
-                                            "p-4 rounded-xl text-lg font-medium transition-colors hover:bg-[#F5F7F9]",
-                                            activeSection === link.href ? "text-[#013F40] bg-[#F5F7F9]" : "text-[#013F40]/60"
+                                            "p-4 rounded-xl text-lg font-medium transition-colors",
+                                            activeSection === link.href ? "text-[#013F40] bg-[#F5F7F9]" : "text-[#013F40]/60 hover:bg-[#F5F7F9]/50"
                                         )}
                                     >
-                                        {link.label}
+                                        {t(`nav.${link.keyStr}`) || link.label}
                                     </a>
                                 ))}
                             </nav>

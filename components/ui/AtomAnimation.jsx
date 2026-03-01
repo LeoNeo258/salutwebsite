@@ -12,12 +12,7 @@ export function AtomAnimation() {
                     boxShadow: "0 0 40px rgba(125,209,95,0.5)"
                 }}
                 animate={{
-                    scale: [1, 1.1, 1],
-                    boxShadow: [
-                        "0 0 30px rgba(125,209,95,0.4)",
-                        "0 0 60px rgba(125,209,95,0.7)",
-                        "0 0 30px rgba(125,209,95,0.4)",
-                    ]
+                    scale: [1, 1.1, 1]
                 }}
                 transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
             />

@@ -1,25 +1,28 @@
 "use client";
 
 import { motion } from "framer-motion";
-
-const footerLinks = {
-    Product: [
-        { label: "Home", href: "#hero" },
-        { label: "About", href: "#" },
-        { label: "Features", href: "#features" },
-    ],
-    "Product_2": [
-        { label: "Pythia AI", href: "#pythia" },
-        { label: "Price", href: "#pricing" },
-        { label: "FAQ", href: "#faq" },
-    ],
-    Legal: [
-        { label: "Privacy Policy", href: "#" },
-        { label: "Terms of Service", href: "#" },
-    ],
-};
+import { useLanguage } from "@/components/LanguageProvider";
 
 export function Footer() {
+    const { t } = useLanguage();
+
+    const footerLinks = {
+        [t("footer.product")]: [
+            { label: t("nav.home"), href: "#hero" },
+            { label: t("nav.about"), href: "#problem" },
+            { label: t("nav.features"), href: "#features" },
+        ],
+        "Product_2": [
+            { label: t("nav.pythia"), href: "#pythia" },
+            { label: t("nav.price"), href: "#pricing" },
+            { label: t("nav.faq"), href: "#faq" },
+        ],
+        [t("footer.legal")]: [
+            { label: t("footer.privacy"), href: "#" },
+            { label: t("footer.terms"), href: "#" },
+        ],
+    };
+
     return (
         <footer className="border-t border-[var(--border-subtle)] py-12 px-6 relative z-10">
             <div className="mx-auto max-w-7xl">
@@ -33,7 +36,7 @@ export function Footer() {
                             <img src="/logo-full.png" alt="Salut Logo" className="h-16 w-auto" />
                         </a>
                         <p className="mt-4 text-sm text-[#013F40]/60 leading-relaxed max-w-xs">
-                            The AI-powered supermarket ERP built for growth.
+                            {t("footer.slogan")}
                         </p>
                     </div>
 
@@ -44,7 +47,7 @@ export function Footer() {
 
                         {Object.entries(footerLinks).map(([key, links]) => {
                             // Only show title for the first product column and Legal
-                            const showTitle = key === 'Product' || key === 'Legal';
+                            const showTitle = key === t("footer.product") || key === t("footer.legal");
 
                             return (
                                 <div key={key} className="text-left w-full">
@@ -77,7 +80,7 @@ export function Footer() {
                 {/* Bottom bar */}
                 <div className="mt-12 pt-6 border-t border-[#013F40]/10 text-center">
                     <p className="text-xs text-[#013F40]/40">
-                        © {new Date().getFullYear()} Salut! Systems. All rights reserved.
+                        {t("footer.rights").replace('{year}', new Date().getFullYear().toString())}
                     </p>
                 </div>
             </div>

@@ -5,37 +5,36 @@ import { motion, AnimatePresence } from "framer-motion";
 import { TrendingUp, Trash2, Zap, Layers } from "lucide-react";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import Image from "next/image";
-
+import { useLanguage } from "@/components/LanguageProvider";
 const features = [
     {
         id: "stock",
-        title: "Reduce Out-of-Stock",
-        description: "AI-powered demand forecasting and automated replenishment keep shelves full and customers coming back. Capture more sales and never miss demand.",
+        titleKey: "problem.f1.title",
+        descKey: "problem.f1.desc",
         icon: TrendingUp,
-        // Using a colored placeholder for now, user can replace with real screenshots
         color: "bg-blue-100",
-        image: "/dashboard.jpg" // Using existing dashboard as placeholder for all
+        image: "/dashboard.jpg"
     },
     {
         id: "waste",
-        title: "Minimize Waste & Protect Margins",
-        description: "Track expiration dates, optimize inventory turnover, and reduce shrink to improve profitability.",
+        titleKey: "problem.f2.title",
+        descKey: "problem.f2.desc",
         icon: Trash2,
         color: "bg-red-100",
         image: "/dashboard.jpg"
     },
     {
         id: "efficiency",
-        title: "Increase Operational Efficiency",
-        description: "Automate purchasing, inventory, and reporting to save time, reduce errors, and empower your team.",
+        titleKey: "problem.f3.title",
+        descKey: "problem.f3.desc",
         icon: Zap,
         color: "bg-yellow-100",
         image: "/dashboard.jpg"
     },
     {
         id: "unified",
-        title: "One Unified System",
-        description: "POS, inventory, accounting, and analytics in a single platform. Less complexity. More visibility. Full control.",
+        titleKey: "problem.f4.title",
+        descKey: "problem.f4.desc",
         icon: Layers,
         color: "bg-purple-100",
         image: "/dashboard.jpg"
@@ -78,6 +77,7 @@ export function Problem() {
     };
 
     const activeFeature = features[activeindex];
+    const { t } = useLanguage();
 
     return (
         <AnimatedSection id="problem" className="py-20 px-6 relative z-10">
@@ -91,7 +91,7 @@ export function Problem() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                         >
-                            ABOUT
+                            {t("problem.badge")}
                         </motion.span>
                         <motion.h2
                             className="text-4xl md:text-5xl font-bold text-[#013F40] leading-tight text-left"
@@ -99,7 +99,7 @@ export function Problem() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                         >
-                            Powering supermarket growth with smart technology
+                            {t("problem.title")}
                         </motion.h2>
                     </div>
                     <div className="text-left">
@@ -110,7 +110,7 @@ export function Problem() {
                             viewport={{ once: true }}
                             transition={{ delay: 0.1 }}
                         >
-                            Salut gives independent retailers the tools of large chains — helping them reduce stockouts, cut waste, and operate more efficiently with one intelligent platform.
+                            {t("problem.description")}
                         </motion.p>
                         <motion.a
                             href="#contact"
@@ -120,7 +120,7 @@ export function Problem() {
                             viewport={{ once: true }}
                             transition={{ delay: 0.2 }}
                         >
-                            Get Started
+                            {t("problem.btnDemo")}
                         </motion.a>
                     </div>
                 </div>
@@ -193,7 +193,7 @@ export function Problem() {
                                         <div>
                                             <h3 className={`text-xl font-bold mb-2 ${isActive ? "text-[#013F40]" : "text-[#013F40]/60"
                                                 }`}>
-                                                {feature.title}
+                                                {t(feature.titleKey)}
                                             </h3>
                                             <AnimatePresence>
                                                 {isActive && (
@@ -204,7 +204,7 @@ export function Problem() {
                                                         className="overflow-hidden"
                                                     >
                                                         <p className="text-[#013F40]/70 leading-relaxed pb-2">
-                                                            {feature.description}
+                                                            {t(feature.descKey)}
                                                         </p>
                                                     </motion.div>
                                                 )}

@@ -4,31 +4,34 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/components/LanguageProvider";
 
-const stats = [
+const statsData = [
     {
-        label: "ROI",
-        value: "384%",
-        description: "Average return on investment within the first year of switching to Salut! from legacy systems."
+        labelKey: "impact.s1.label",
+        valueKey: "impact.s1.value",
+        descKey: "impact.s1.desc"
     },
     {
-        label: "Waste Reduction",
-        value: "35%",
-        description: "Minimize spoilage with AI-powered demand forecasting and auto-replenishment."
+        labelKey: "impact.s2.label",
+        valueKey: "impact.s2.value",
+        descKey: "impact.s2.desc"
     },
     {
-        label: "Hours Saved",
-        value: "1,500+",
-        description: "Hours reclaimed annually per store by automating inventory, scheduling, and purchasing."
+        labelKey: "impact.s3.label",
+        valueKey: "impact.s3.value",
+        descKey: "impact.s3.desc"
     },
     {
-        label: "Payback",
-        value: "< 6 mo",
-        description: "Most independent grocers see full system payback in under six months."
+        labelKey: "impact.s4.label",
+        valueKey: "impact.s4.value",
+        descKey: "impact.s4.desc"
     }
 ];
 
 export function ImpactSection() {
+    const { t } = useLanguage();
+
     return (
         <AnimatedSection id="impact" className="py-24 px-6 relative z-10 bg-[#013F40]">
             <div className="mx-auto max-w-7xl">
@@ -41,7 +44,7 @@ export function ImpactSection() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                         >
-                            "It&apos;s like adding 15 full-time employees."
+                            {t("impact.quote")}
                         </motion.blockquote>
                         <motion.p
                             className="text-lg text-white/70 leading-relaxed"
@@ -50,7 +53,7 @@ export function ImpactSection() {
                             viewport={{ once: true }}
                             transition={{ delay: 0.1 }}
                         >
-                            According to internal data, Salut saves the average independent supermarket over 1,500 hours per year, and delivers industry-leading ROI by cutting waste and optimizing labor.
+                            {t("impact.description")}
                         </motion.p>
                     </div>
                     <motion.div
@@ -61,10 +64,10 @@ export function ImpactSection() {
                         transition={{ delay: 0.2 }}
                     >
                         <a
-                            href="#cta"
+                            href="#contact"
                             className="inline-flex items-center px-8 py-4 rounded-full bg-white text-[#013F40] text-lg font-bold hover:bg-gray-100 transition-all shadow-md hover:scale-[1.02]"
                         >
-                            Get Started <ArrowRight className="ml-2 w-5 h-5" />
+                            {t("impact.btnStart")} <ArrowRight className="ml-2 w-5 h-5" />
                         </a>
                     </motion.div>
                 </div>
@@ -74,9 +77,9 @@ export function ImpactSection() {
 
                 {/* Stats Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12">
-                    {stats.map((stat, i) => (
+                    {statsData.map((stat, i) => (
                         <motion.div
-                            key={stat.label}
+                            key={stat.labelKey}
                             className="relative"
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
@@ -84,18 +87,18 @@ export function ImpactSection() {
                             transition={{ delay: 0.1 + (i * 0.1) }}
                         >
                             {/* Vertical Line for Desktop (except last item) */}
-                            {i !== stats.length - 1 && (
+                            {i !== statsData.length - 1 && (
                                 <div className="hidden lg:block absolute right-0 top-0 bottom-0 w-px bg-white/10 translate-x-4" />
                             )}
 
                             <span className="text-sm font-bold uppercase tracking-wider text-[#7DD15F] mb-4 block">
-                                {stat.label}
+                                {t(stat.labelKey)}
                             </span>
                             <div className="text-5xl md:text-6xl font-medium text-white mb-4 tracking-tight">
-                                {stat.value}
+                                {t(stat.valueKey)}
                             </div>
                             <p className="text-white/70 leading-relaxed text-sm pr-4">
-                                {stat.description}
+                                {t(stat.descKey)}
                             </p>
                         </motion.div>
                     ))}

@@ -4,41 +4,38 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
+import { useLanguage } from "@/components/LanguageProvider";
 
-const faqData = [
+const faqDataConfig = [
     {
-        question: "Can Salut! replace my current POS system?",
-        answer:
-            "Absolutely. Salut! is designed as a complete all-in-one ERP, which includes a modern, high-speed Point of Sale interface that works offline and syncs instantly with your inventory.",
+        qKey: "faq.q1.q",
+        aKey: "faq.q1.a",
     },
     {
-        question: "Do I need to buy new hardware?",
-        answer:
-            "In most cases, no. Salut! runs in the browser and is compatible with standard barcode scanners, receipt printers, and touch screens. We also offer a dedicated hardware kit if you're starting fresh.",
+        qKey: "faq.q2.q",
+        aKey: "faq.q2.a",
     },
     {
-        question: "How does the AI inventory prediction work?",
-        answer:
-            "Pythia, our AI engine, analyzes your sales history, local events, and even weather patterns to predict exactly what you need to order. It spots trends before they happen, reducing waste and preventing stockouts.",
+        qKey: "faq.q3.q",
+        aKey: "faq.q3.a",
     },
     {
-        question: "How long does it take to get set up?",
-        answer:
-            "We can get your store migrated and running in as little as 24 hours. Our team handles the data import from your old system so you don't have to manually re-enter products.",
+        qKey: "faq.q4.q",
+        aKey: "faq.q4.a",
     },
     {
-        question: "Is my data secure?",
-        answer:
-            "Yes. We use enterprise-grade encryption for all data storage and transmission. Your business data is backed up automatically every hour.",
+        qKey: "faq.q5.q",
+        aKey: "faq.q5.a",
     },
 ];
 
 function FaqItem({ item, index }) {
     const [isOpen, setIsOpen] = useState(false);
+    const { t } = useLanguage();
 
     return (
         <motion.div
-            className="rounded-2xl border border-[var(--border-subtle)] bg-[var(--glass-bg)] backdrop-blur-xl overflow-hidden transition-colors duration-300 hover:border-[var(--border-hover)]"
+            className="rounded-2xl border border-[var(--border-subtle)] bg-white/95 overflow-hidden transition-colors duration-300 hover:border-[var(--border-hover)]"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -50,7 +47,7 @@ function FaqItem({ item, index }) {
                 aria-expanded={isOpen}
             >
                 <span className="text-lg font-medium text-[var(--text-primary)] pr-4">
-                    {item.question}
+                    {t(item.qKey)}
                 </span>
                 <motion.div
                     animate={{ rotate: isOpen ? 180 : 0 }}
@@ -74,7 +71,7 @@ function FaqItem({ item, index }) {
                     >
                         <div className="px-6 pb-5 border-t border-[var(--border-subtle)]">
                             <p className="pt-4 text-[var(--text-secondary)] leading-relaxed">
-                                {item.answer}
+                                {t(item.aKey)}
                             </p>
                         </div>
                     </motion.div>
@@ -85,6 +82,8 @@ function FaqItem({ item, index }) {
 }
 
 export function Faq() {
+    const { t } = useLanguage();
+
     return (
         <AnimatedSection id="faq" className="py-20 px-6 relative z-10">
             <div className="mx-auto max-w-7xl">
@@ -95,7 +94,7 @@ export function Faq() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                     >
-                        FAQ
+                        {t("faq.badge")}
                     </motion.span>
                     <motion.h2
                         className="mt-4 text-4xl md:text-5xl font-bold text-[#013F40]"
@@ -104,7 +103,7 @@ export function Faq() {
                         viewport={{ once: true }}
                         transition={{ delay: 0.1 }}
                     >
-                        Frequently Asked Questions
+                        {t("faq.title")}
                     </motion.h2>
                     <motion.p
                         className="mt-4 text-lg text-[#013F40]/70 max-w-2xl mx-auto"
@@ -113,12 +112,12 @@ export function Faq() {
                         viewport={{ once: true }}
                         transition={{ delay: 0.2 }}
                     >
-                        We&apos;ve heard them all. Here are the ones that matter most.
+                        {t("faq.description")}
                     </motion.p>
                 </div>
 
                 <div className="max-w-3xl mx-auto space-y-4">
-                    {faqData.map((item, i) => (
+                    {faqDataConfig.map((item, i) => (
                         <FaqItem key={i} item={item} index={i} />
                     ))}
                 </div>
