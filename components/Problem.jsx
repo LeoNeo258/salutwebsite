@@ -112,16 +112,20 @@ export function Problem() {
                         >
                             {t("problem.description")}
                         </motion.p>
-                        <motion.a
-                            href="#contact"
-                            className="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white transition-all duration-200 bg-[#013F40] rounded-full hover:bg-[#013F40]/90 hover:shadow-lg hover:-translate-y-0.5"
+                        <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.2 }}
+                            className="inline-block"
                         >
-                            {t("problem.btnDemo")}
-                        </motion.a>
+                            <a
+                                href="#contact"
+                                className="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white transition-all duration-300 bg-[#013F40] rounded-full hover:bg-[#013F40]/90 hover:shadow-lg hover:-translate-y-1 active:translate-y-0"
+                            >
+                                {t("problem.btnDemo")}
+                            </a>
+                        </motion.div>
                     </div>
                 </div>
 

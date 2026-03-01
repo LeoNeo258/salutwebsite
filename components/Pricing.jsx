@@ -69,7 +69,7 @@ export function Pricing() {
 
                     <a
                         href="#contact"
-                        className="block w-full py-4 rounded-xl text-center bg-[#013F40] text-white font-bold text-lg hover:bg-[#013F40]/90 transition-all shadow-lg hover:scale-[1.02]"
+                        className="block w-full py-4 rounded-xl text-center bg-[#013F40] text-white font-bold text-lg hover:bg-[#013F40]/90 transition-all duration-300 shadow-lg hover:scale-105 active:scale-95"
                     >
                         {t("pricing.btnStart")}
                     </a>

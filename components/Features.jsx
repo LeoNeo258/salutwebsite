@@ -155,7 +155,7 @@ function FeatureCard({ feature, index }) {
     return (
         <motion.div
             className={cn(
-                "rounded-3xl overflow-hidden group hover:shadow-xl transition-all duration-300 border border-[#013F40]/5 bg-white flex flex-col h-full",
+                "rounded-3xl overflow-hidden group hover:shadow-xl transition-shadow transition-colors duration-300 border border-[#013F40]/5 bg-white flex flex-col h-full",
                 feature.colSpan
             )}
             initial={{ opacity: 0, y: 20 }}

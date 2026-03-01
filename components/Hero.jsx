@@ -60,22 +60,18 @@ export function Hero() {
                     </p>
 
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                        <motion.a
+                        <a
                             href="#contact"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="inline-flex items-center px-8 py-4 rounded-full bg-[#013F40] text-white text-lg font-semibold shadow-lg shadow-[#013F40]/20 hover:shadow-xl hover:bg-[#013F40]/90 transition-all"
+                            className="inline-flex items-center px-8 py-4 rounded-full bg-[#013F40] text-white text-lg font-semibold shadow-lg shadow-[#013F40]/20 hover:shadow-xl hover:bg-[#013F40]/90 transition-all duration-300 hover:scale-105 active:scale-95"
                         >
                             {t("hero.btnStart")} <ArrowRight className="ml-2 w-5 h-5" />
-                        </motion.a>
-                        <motion.a
+                        </a>
+                        <a
                             href="#features"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="inline-flex items-center px-8 py-4 rounded-full bg-white text-[#013F40] border border-[#013F40]/10 text-lg font-semibold hover:bg-gray-50 transition-all"
+                            className="inline-flex items-center px-8 py-4 rounded-full bg-white text-[#013F40] border border-[#013F40]/10 text-lg font-semibold hover:bg-gray-50 transition-all duration-300 hover:scale-105 active:scale-95"
                         >
                             {t("hero.btnFeatures")}
-                        </motion.a>
+                        </a>
                     </div>
                 </motion.div>
 

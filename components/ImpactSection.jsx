@@ -65,7 +65,7 @@ export function ImpactSection() {
                     >
                         <a
                             href="#contact"
-                            className="inline-flex items-center px-8 py-4 rounded-full bg-white text-[#013F40] text-lg font-bold hover:bg-gray-100 transition-all shadow-md hover:scale-[1.02]"
+                            className="inline-flex items-center px-8 py-4 rounded-full bg-white text-[#013F40] text-lg font-bold hover:bg-gray-100 transition-all duration-300 shadow-md hover:scale-105 active:scale-95"
                         >
                             {t("impact.btnStart")} <ArrowRight className="ml-2 w-5 h-5" />
                         </a>
